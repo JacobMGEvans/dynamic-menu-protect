@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.0.0-beta.23",
-    "next": "14.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@clerk/nextjs": "^5.1.2",
+    "babel-plugin-react-compiler": "0.0.0-experimental-592953e-20240517",
+    "next": "15.0.0-rc.0",
+    "react": "19.0.0-rc-935180c7e0-20240524",
+    "react-dom": "19.0.0-rc-935180c7e0-20240524"
   },
   "devDependencies": {
     "@types/node": "latest",
@@ -20,7 +21,7 @@
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
     "eslint": "latest",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "latest",
     "postcss": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"

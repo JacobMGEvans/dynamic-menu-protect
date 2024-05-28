@@ -1,6 +1,21 @@
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+"use client";
+import {
+  OrganizationProfile,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useClerk,
+} from "@clerk/nextjs";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { setActive } = useClerk();
+
+  useEffect(() => {
+    setActive({ organization: "org_2gQR8NEC42hHcCuuizwi5JiDqsU" });
+  }, [setActive]);
+
   return (
     <div className="h-screen">
       <SignedOut>
@@ -9,8 +24,19 @@ export default function Home() {
       </SignedOut>
       <SignedIn>
         <UserButton />
+        <OrganizationProfile routing="virtual">
+          <OrganizationProfile.Page
+            label="Settings"
+            url="settings"
+            labelIcon="🛠️"
+          >
+            CUSTOM STUFF
+          </OrganizationProfile.Page>
+          <OrganizationProfile.Page label="general" />
+          <OrganizationProfile.Page label="members" />
+        </OrganizationProfile>
         <p>This content is private. Only signed in users can see this.</p>
       </SignedIn>
     </div>
-  )
+  );
 }
