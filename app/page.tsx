@@ -1,6 +1,8 @@
 "use client";
 import {
   OrganizationProfile,
+  OrganizationSwitcher,
+  Protect,
   SignInButton,
   SignedIn,
   SignedOut,
@@ -9,20 +11,26 @@ import {
 } from "@clerk/nextjs";
 import { useEffect } from "react";
 
+const menuItems = [
+  { label: "Section", permissions: ["org:admin:generic", "org:admin:system"] },
+  {
+    label: "Sub Items 1",
+    permissions: ["org:admin:system"],
+  },
+  {
+    label: "Sub Items 2",
+    permissions: ["org:admin:generic"],
+  },
+];
 export default function Home() {
-  const { setActive } = useClerk();
-
-  useEffect(() => {
-    setActive({ organization: "org_2gQR8NEC42hHcCuuizwi5JiDqsU" });
-  }, [setActive]);
-
   return (
     <div className="h-screen">
       <SignedOut>
-        <SignInButton />
         <p>This content is public. Only signed out users can see this.</p>
+        <SignInButton />
       </SignedOut>
       <SignedIn>
+        <OrganizationSwitcher />
         <UserButton />
         <OrganizationProfile routing="virtual">
           <OrganizationProfile.Page
@@ -30,12 +38,26 @@ export default function Home() {
             url="settings"
             labelIcon="🛠️"
           >
-            CUSTOM STUFF
+            <p>PROTECTED?</p>
+            {menuItems.map(({ label, permissions }) => {
+              return (
+                <Protect
+                  condition={(has) =>
+                    permissions.some((p) => {
+                      console.log("test", p);
+                      return has({ permission: p });
+                    })
+                  }
+                >
+                  {label}
+                </Protect>
+              );
+            })}
           </OrganizationProfile.Page>
           <OrganizationProfile.Page label="general" />
           <OrganizationProfile.Page label="members" />
         </OrganizationProfile>
-        <p>This content is private. Only signed in users can see this.</p>
+        {}
       </SignedIn>
     </div>
   );
